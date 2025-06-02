@@ -14,6 +14,10 @@ const OutputBox = ({ isPending }) => {
     }
   }, [chats]);
 
+  if (chats.length === 0) {
+    return <p className="text-center mt-[2rem]">Ready to create? Choose text or image and start prompting! 🥰</p>
+  }
+
   return (
     <div
       ref={outputRef}

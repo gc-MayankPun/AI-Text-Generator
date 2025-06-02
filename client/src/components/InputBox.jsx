@@ -1,8 +1,8 @@
 import { FaArrowUp } from "react-icons/fa6";
 import { useInput } from "../context/InputContext";
-import { FaStop, FaImage } from "react-icons/fa";
-import { IoPencil } from "react-icons/io5";
+import { FaStop, FaImage } from "react-icons/fa"; 
 import { useCallback, useState } from "react";
+import { BsChatLeftTextFill } from "react-icons/bs";
 
 const InputBox = ({ sendPrompt, isPending }) => {
   const [toolType, setToolType] = useState("TEXT");
@@ -84,7 +84,7 @@ const Toolbar = ({ isPending, toolType, changeToolType }) => {
         type="button"
       >
         {toolType === "TEXT" ? (
-          <IoPencil title="Generate content" />
+          <BsChatLeftTextFill title="Generate content" />
         ) : (
           <FaImage title="Generate image" />
         )}
