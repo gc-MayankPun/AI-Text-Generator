@@ -1,4 +1,5 @@
-export const postPrompt = async ({ message, toolType }) => {
+
+export const postPrompt = async ({ message, toolType, signal }) => {
   try {
     const request =
       toolType === "TEXT"
@@ -11,6 +12,7 @@ export const postPrompt = async ({ message, toolType }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ message }),
+      signal, // Pass signal directly
     });
 
     const data = await response.json();
