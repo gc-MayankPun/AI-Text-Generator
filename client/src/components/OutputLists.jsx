@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { generateRandomID } from "../utils/generateRandomID";
+import { FaDownload } from "react-icons/fa";
 
 const OutputLists = ({ chats }) => {
   return chats.map((data) => {
@@ -20,11 +21,20 @@ const OutputMessage = memo(({ data }) => {
         }`}
       >
         {data?.image ? (
-          <img
-            src={data.image}
-            alt="image"
-            className=" h-auto w-auto rounded-md"
-          />
+          <>
+            <img
+              src={data.image}
+              alt="image"
+              className=" h-auto w-auto rounded-md cursor-pointer transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-60"
+            />
+            <a
+              href={data.image}
+              className="h-fit w-fit mt-2 flex items-baseline gap-2 text-green-500 transition-all duration-300 ease-in-out hover:text-green-300"
+              download
+            >
+              <FaDownload /> Download
+            </a>
+          </>
         ) : (
           <p className="whitespace-pre-wrap break-words">{data.message}</p>
         )}

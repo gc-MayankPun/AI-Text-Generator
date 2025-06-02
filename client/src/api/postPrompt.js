@@ -5,7 +5,6 @@ export const postPrompt = async ({ message, toolType }) => {
         ? "http://localhost:3000/api/send-prompt"
         : "http://localhost:3000/api/generate-image";
 
-    console.log("Request Type:", request);
     const response = await fetch(request, {
       method: "POST",
       headers: {

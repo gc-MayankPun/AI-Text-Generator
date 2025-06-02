@@ -8,9 +8,7 @@ const App = () => {
   return (
     <>
       <div className="h-[100dvh] relative py-3">
-        <h1 className="text-2xl font-bold mb-4 text-center">
-          AI Text Generator
-        </h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Promptly 🤖</h1>
         <InputBox sendPrompt={sendPrompt} isPending={isPending} />
         <OutputBox isPending={isPending} />
       </div>
