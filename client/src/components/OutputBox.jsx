@@ -17,7 +17,7 @@ const OutputBox = ({ isPending }) => {
   return (
     <div
       ref={outputRef}
-      className="h-[calc(100dvh_-_11rem)] w-[60%] m-auto p-4 overflow-x-hidden overflow-y-auto scroll-smooth pb-[6rem] flex flex-col gap-[2rem]"
+      className="h-[calc(100dvh_-_11rem)] lg:w-[60%] w-[90%] m-auto p-4 overflow-x-hidden overflow-y-auto scroll-smooth pb-[6rem] flex flex-col gap-[2rem]"
     >
       <OutputLists chats={chats} />
 

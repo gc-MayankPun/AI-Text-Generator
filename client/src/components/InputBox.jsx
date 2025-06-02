@@ -14,7 +14,7 @@ const InputBox = ({ sendPrompt, isPending }) => {
   return (
     <form
       onSubmit={(e) => sendPrompt(e, toolType)}
-      className="w-[55%] p-2 rounded-md absolute bottom-[1.5rem] right-[50%] translate-x-[50%] z-10 bg-[var(--textarea-bg-color)]"
+      className="lg:w-[60%] w-[90%] p-2 rounded-md absolute bottom-[1.5rem] right-[50%] translate-x-[50%] z-10 bg-[var(--textarea-bg-color)]"
     >
       <Input
         sendPrompt={sendPrompt}
