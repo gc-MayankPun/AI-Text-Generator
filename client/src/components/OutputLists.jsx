@@ -8,7 +8,6 @@ const OutputLists = ({ chats }) => {
 };
 
 const OutputMessage = memo(({ data }) => {
-  console.log(data.message);
   return (
     <div className="h-auto flex flex-col">
       <div
@@ -20,7 +19,15 @@ const OutputMessage = memo(({ data }) => {
               }`
         }`}
       >
-        <p className="whitespace-pre-wrap break-words">{data.message}</p>
+        {data?.image ? (
+          <img
+            src={data.image}
+            alt="image"
+            className=" h-auto w-auto rounded-md"
+          />
+        ) : (
+          <p className="whitespace-pre-wrap break-words">{data.message}</p>
+        )}
       </div>
     </div>
   );

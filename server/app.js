@@ -2,10 +2,10 @@ const express = require("express");
 const { limiter } = require("./middlewares/rateLimiter");
 const app = express();
 var cors = require("cors");
-const { GoogleGenAI } = require("@google/genai");
+const { GoogleGenAI, Modality } = require("@google/genai");
 const errorHandler = require("./middlewares/errorHandlerMiddleware");
 const tokenLimitChecker = require("./utils/tokenLimitChecker");
-require("dotenv").config();
+require("dotenv").config(); 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,7 +36,8 @@ app.post("/api/send-prompt", async (req, res) => {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
+      // model: "gemini-1.5-flash",
+      model: "gemini-2.0-flash",
       contents: message,
     });
     res.status(200).json({ success: true, message: response.text });
@@ -47,8 +48,58 @@ app.post("/api/send-prompt", async (req, res) => {
   }
 });
 
+app.post("/api/generate-image", async (req, res) => {
+  const { message } = req.body;
+
+  if (!message)
+    return res
+      .status(400)
+      .json({ success: false, message: "Image description required." });
+
+  if (!tokenLimitChecker(message)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Image description is too long." });
+  }
+
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash-preview-image-generation",
+      contents: message,
+      config: {
+        responseModalities: [Modality.TEXT, Modality.IMAGE],
+      },
+    });
+
+    let imageData = null;
+
+    for (const part of response.candidates[0].content.parts) {
+      if (part.inlineData) {
+        imageData = part.inlineData.data; 
+      }
+    }
+
+    if (!imageData) {
+      return res
+        .status(500)
+        .json({ success: false, message: "No image was generated." });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Image Generated",
+      image: `data:image/png;base64,${imageData}`,
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to get response from Server." });
+  }
+});
+
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
-  console.log("Server Listening at Port 3000");
+  console.log(`Server Listening at Port ${process.env.PORT}`);
 });

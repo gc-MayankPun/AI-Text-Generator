@@ -10,25 +10,16 @@ const usePromptHandler = () => {
   const mutation = useMutation({
     mutationFn: postPrompt,
     onSuccess: (data) => {
-      // if (data.status === 429) {
-      //   setChats((prev) => [
-      //     ...prev,
-      //     {
-      //       type: "bot",
-      //       success: false,
-      //       message:
-      //         data?.error ||
-      //         "Too many request! Please try again after some time.",
-      //     },
-      //   ]);
-      //   return;
-      // }
-
       if (outputRef.current) {
         inputRef.current.value = "";
         setChats((prev) => [
           ...prev,
-          { type: "bot", success: data.success, message: data?.message },
+          {
+            type: "bot",
+            success: data.success,
+            message: data?.message,
+            image: data?.image,
+          },
         ]);
       }
     },
@@ -47,7 +38,7 @@ const usePromptHandler = () => {
     },
   });
 
-  const sendPrompt = (event) => {
+  const sendPrompt = (event, toolType) => {
     event.preventDefault();
 
     if (inputRef.current) {
@@ -55,7 +46,8 @@ const usePromptHandler = () => {
       if (!prompt) return;
       setChats((prev) => [...prev, { type: "self", message: prompt }]);
 
-      mutation.mutate(prompt);
+      // mutation.mutate(prompt);
+      mutation.mutate({ message: prompt, toolType });
     }
   };
 
